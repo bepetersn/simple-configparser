@@ -4,6 +4,7 @@ import configparser
 
 
 DEFAULT_PADDING = """
+
 [DEFAULT]
 
 """
@@ -30,27 +31,29 @@ class SimpleConfigParser(configparser.RawConfigParser):
         return self.defaults()
 
 
-class FilePaddedForIteration(io.FileIO):
+class FilePaddedForIteration:
     """
-    A subclass of io.FileIO which should only
-    be used by iterating over it directly. When
-    accessed this way, it will incorporate the
-    padding with which it was initialized.
+    A class whose primary interface is the
+    __iter__ method. When accessed this way,
+    it will act like a file, incorporating
+    the padding with which it was
+    initialized at the top of file.
 
     """
 
     def __init__(self, padding, file):
-        super(FilePaddedForIteration, self).__init__(file.name, file.mode)
+        self._file = file
         self._padding = padding
 
     def __iter__(self):
-        if self.tell() == 0:
+        if self._file.tell() == 0:
             padding_lines = self._padding.split()
             for line in padding_lines:
                 yield line
 
-        for line in self.readlines():
-            yield line
+        with open(self._file.name, encoding='utf-8', mode='rt') as f:
+           for line in self._file.readlines():
+                yield line
 
 
 
