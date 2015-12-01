@@ -28,7 +28,7 @@ class SimpleConfigParser(configparser.RawConfigParser):
         )
 
     def items(self, section=configparser._UNSET, raw=False, vars=None):
-        return self.defaults()
+        return {k: v.strip() for k, v in dict(self.defaults()).items()}
 
 
 class FilePaddedForIteration:
@@ -41,8 +41,8 @@ class FilePaddedForIteration:
 
     """
 
-    def __init__(self, padding, file):
-        self._file = file
+    def __init__(self, padding, f):
+        self._file = f
         self._padding = padding
 
     def __iter__(self):

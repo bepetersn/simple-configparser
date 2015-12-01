@@ -9,7 +9,7 @@ import setuptools  # this import is needed so that some options and commands wor
 
 setup(
     name='simple-configparser',
-    version='0.1.0.0',
+    version='0.1.1.0',
     author='Brian E. Peterson',
     author_email='bepetersondev@gmail.com',
     url='https://github.com/bepetersn/simple-configparser',
