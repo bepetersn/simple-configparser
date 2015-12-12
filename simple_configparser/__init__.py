@@ -1,7 +1,9 @@
 
 import io
-import configparser
-
+try:
+    import configparser
+except ImportError:
+    import ConfigParser as configparser
 
 DEFAULT_PADDING = """
 
@@ -27,7 +29,7 @@ class SimpleConfigParser(configparser.RawConfigParser):
             fpname
         )
 
-    def items(self, section=configparser._UNSET, raw=False, vars=None):
+    def items(self, **kwargs):
         return {k: v.strip() for k, v in dict(self.defaults()).items()}
 
 
